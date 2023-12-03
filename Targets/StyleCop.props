@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(MSBuildSolutionRootDirectory)StyleCop.ruleset</CodeAnalysisRuleSet>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildSolutionRootDirectory)StyleCop.json" Condition="Exists('$(MSBuildSolutionRootDirectory)StyleCop.json')"/>
+  </ItemGroup>
+</Project>
