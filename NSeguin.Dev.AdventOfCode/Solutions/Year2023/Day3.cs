@@ -64,16 +64,6 @@ public partial class Day3() : AdventOfCodeSolution(2023, 3)
             return c.IsNumber && (c.X == 0 || !GetCharAt(c.X - 1, c.Y).IsNumber);
         }
 
-        public bool IsSymbolAt(int x, int y)
-        {
-            return GetCharAt(x, y).IsSymbol;
-        }
-
-        public bool IsNumberAt(int x, int y)
-        {
-            return GetCharAt(x, y).IsNumber;
-        }
-
         public bool IsAdjacentToSymbol(CharInfo c, out CharInfo adjacentToCharInfo)
         {
             return PositionsAdjacentToSymbols.TryGetValue(c, out adjacentToCharInfo);
@@ -104,23 +94,26 @@ public partial class Day3() : AdventOfCodeSolution(2023, 3)
                     c =>
                     {
                         int startOfNumber = c.X;
-                        (int x, int y) = (c.X, c.Y);
+                        int row = c.Y;
+                        int rowLength = schematic.Chars[row].Length;
+                        int currentX = c.X;
                         List<Schematic.CharInfo> adjacentTo = [];
                         do
                         {
-                            var charInfo = schematic.GetCharAt(x, y);
+                            var charInfo = schematic.GetCharAt(currentX, row);
                             if (schematic.IsAdjacentToSymbol(charInfo, out var adjacentToCharInfo))
                             {
                                 adjacentTo.Add(adjacentToCharInfo);
                             }
 
-                            x++;
+                            currentX++;
                         }
-                        while (x < schematic.Chars[y].Length && schematic.IsNumberAt(x, y));
+                        while (currentX < rowLength - 1
+                               && schematic.GetCharAt(currentX, row).IsNumber);
 
                         if (adjacentTo.Count > 0)
                         {
-                            var numberSpan = schematic.Chars[y][startOfNumber..x]
+                            var numberSpan = schematic.Chars[row][startOfNumber..currentX]
                                 .Select(x => x.Char)
                                 .ToArray();
 
@@ -151,19 +144,22 @@ public partial class Day3() : AdventOfCodeSolution(2023, 3)
                     c =>
                     {
                         int startOfNumber = c.X;
-                        (int x, int y) = (c.X, c.Y);
+                        int row = c.Y;
+                        int rowLength = schematic.Chars[row].Length;
+                        int currentX = c.X;
                         List<Schematic.CharInfo> adjacentTo = [];
                         do
                         {
-                            var charInfo = schematic.GetCharAt(x, y);
+                            var charInfo = schematic.GetCharAt(currentX, row);
                             if (schematic.IsAdjacentToSymbol(charInfo, out var adjacentToCharInfo))
                             {
                                 adjacentTo.Add(adjacentToCharInfo);
                             }
 
-                            x++;
+                            currentX++;
                         }
-                        while (x < schematic.Chars[y].Length && schematic.IsNumberAt(x, y));
+                        while (currentX < rowLength - 1
+                               && schematic.GetCharAt(currentX, row).IsNumber);
 
                         var adjacentToGears = adjacentTo.Where(c => c.IsGear)
                             .DistinctBy(c => (c.X, c.Y))
@@ -171,7 +167,7 @@ public partial class Day3() : AdventOfCodeSolution(2023, 3)
 
                         if (adjacentToGears.Count > 0)
                         {
-                            var numberSpan = schematic.Chars[y][startOfNumber..x]
+                            var numberSpan = schematic.Chars[row][startOfNumber..currentX]
                                 .Select(x => x.Char)
                                 .ToArray();
 
@@ -185,7 +181,7 @@ public partial class Day3() : AdventOfCodeSolution(2023, 3)
                 .ToList();
 
             var numbersGroupedByGear = numbersAdjacentToSymbol
-                .SelectMany(x => x.AdjacentToGears.Select(g => (Number: x.Number, Gear: g)))
+                .SelectMany(x => x.AdjacentToGears.Select(g => (x.Number, Gear: g)))
                 .GroupBy(x => x.Gear)
                 .Where(x => x.Count() == 2)
                 .Select(x => (First: x.First(), Second: x.Last()))
