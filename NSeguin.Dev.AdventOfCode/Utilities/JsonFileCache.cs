@@ -9,7 +9,7 @@ internal class JsonFileCache
     private bool _isTainted;
 
     public JsonFileCache(
-        IJsonFileCacheRegistry registry,
+        JsonFileCacheRegistry registry,
         string cacheFile,
         JsonSerializerOptions? jsonSerializerOptions = null)
     {

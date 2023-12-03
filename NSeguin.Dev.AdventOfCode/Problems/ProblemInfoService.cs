@@ -15,7 +15,7 @@ internal sealed class ProblemInfoService : IProblemInfoService
         IOptions<AdventOfCodeSettings> settings,
         SessionAccessor sessionAccessor,
         IAdventOfCodeClient client,
-        IJsonFileCacheRegistry registry)
+        JsonFileCacheRegistry registry)
     {
         _sessionAccessor = sessionAccessor;
         Logger = logger;

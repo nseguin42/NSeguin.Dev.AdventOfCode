@@ -14,7 +14,7 @@ internal sealed class JsonFileCacheManager : IHostedService, IDisposable
     private ValueTask? _shutdownTask;
 
     public JsonFileCacheManager(
-        IJsonFileCacheRegistry registry,
+        JsonFileCacheRegistry registry,
         ILogger<JsonFileCacheManager> logger,
         IHostApplicationLifetime lifetime)
     {
@@ -34,7 +34,7 @@ internal sealed class JsonFileCacheManager : IHostedService, IDisposable
 
     private ILogger<JsonFileCacheManager> Logger { get; }
 
-    private IJsonFileCacheRegistry Registry { get; }
+    private JsonFileCacheRegistry Registry { get; }
     private IEnumerable<JsonFileCache> Caches => Registry.Caches;
 
     public void Dispose()

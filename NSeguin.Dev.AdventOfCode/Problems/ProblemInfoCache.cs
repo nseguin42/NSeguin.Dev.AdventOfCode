@@ -6,7 +6,7 @@ namespace NSeguin.Dev.AdventOfCode;
 
 internal class ProblemInfoCache : JsonFileCache
 {
-    public ProblemInfoCache(IJsonFileCacheRegistry registry, string sessionIdHash, string fileName)
+    public ProblemInfoCache(JsonFileCacheRegistry registry, string sessionIdHash, string fileName)
         : base(registry, fileName, ProblemInfoCacheSerializerContext.Default.Options)
     {
         SessionIdHash = sessionIdHash;

@@ -25,7 +25,7 @@ public static class ServiceRegistration
     public static IServiceCollection AddAdventOfCode(this IServiceCollection services)
     {
         services.AddSingleton<IProblemInfoService, ProblemInfoService>();
-        services.AddSingleton<IJsonFileCacheRegistry, JsonFileCacheRegistry>();
+        services.AddSingleton<JsonFileCacheRegistry, JsonFileCacheRegistry>();
         services.AddHostedService<JsonFileCacheManager>();
         services.AddSingleton<SessionAccessor>();
         services.AddSingleton<AdventOfCodeSolver>();
