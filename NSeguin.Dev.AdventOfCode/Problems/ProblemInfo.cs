@@ -2,7 +2,7 @@ namespace NSeguin.Dev.AdventOfCode;
 
 public record ProblemInfo(
     ProblemId Id,
-    string sessionIdSha256Hash,
+    string SessionIdSha256Hash,
     string? Input,
     string? Part1Answer,
     DateTimeOffset? Part1SubmittedAt,
