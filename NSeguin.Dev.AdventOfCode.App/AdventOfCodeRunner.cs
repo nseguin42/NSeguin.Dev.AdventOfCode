@@ -25,11 +25,17 @@ public sealed class AdventOfCodeRunner
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(Options.ProblemsToSolve);
         Logger.LogInformation("Starting Advent of Code runner");
-        foreach (ProblemId id in Options.ProblemsToSolve)
+        if (Options.ProblemsToSolve is null)
         {
-            await Solver.SolveAsync(id, cancellationToken).ConfigureAwait(false);
+            await Solver.SolveAllAsync(cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            foreach (ProblemId id in Options.ProblemsToSolve)
+            {
+                await Solver.SolveAsync(id, cancellationToken).ConfigureAwait(false);
+            }
         }
 
         Logger.LogInformation("Advent of Code runner finished");

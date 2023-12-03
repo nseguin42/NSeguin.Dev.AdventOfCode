@@ -17,6 +17,14 @@ public sealed class AdventOfCodeSolver(
 
     private IProblemInfoService ProblemInfoService { get; } = problemInfoService;
 
+    public async ValueTask SolveAllAsync(CancellationToken cancellationToken = default)
+    {
+        foreach (AdventOfCodeSolution solution in Solutions.Values)
+        {
+            await SolveAsync(solution.Id, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
     public async ValueTask SolveAsync(ProblemId id, CancellationToken cancellationToken = default)
     {
         using IDisposable? scope = Logger.BeginScope(id);

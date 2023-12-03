@@ -13,12 +13,9 @@ public class AdventOfCodeSettings
 
     public int TimeoutInSeconds { get; set; } = 30;
 
-    [Required]
-    [DisallowNull]
     public List<ProblemId>? ProblemsToSolve { get; set; }
 
     [Required]
-    [DisallowNull]
     public string CacheFileName { get; set; } = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "NSeguin.Dev",
