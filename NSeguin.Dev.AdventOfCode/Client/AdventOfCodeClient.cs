@@ -36,7 +36,7 @@ public sealed class AdventOfCodeClient : IAdventOfCodeClient
     {
         if (!Settings.SubmitAnswers)
         {
-            return true;
+            throw new InvalidOperationException("Submitting answers is disabled");
         }
 
         Uri url;

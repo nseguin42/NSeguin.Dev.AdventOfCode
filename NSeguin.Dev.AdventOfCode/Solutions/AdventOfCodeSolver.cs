@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace NSeguin.Dev.AdventOfCode.Solutions;
 
@@ -6,7 +7,8 @@ public sealed class AdventOfCodeSolver(
     ILogger<AdventOfCodeSolver> logger,
     IEnumerable<AdventOfCodeSolution> solutions,
     IAdventOfCodeClient client,
-    IProblemInfoService problemInfoService)
+    IProblemInfoService problemInfoService,
+    IOptions<AdventOfCodeSettings> settings)
 {
     private ILogger<AdventOfCodeSolver> Logger { get; } = logger;
 
@@ -16,6 +18,8 @@ public sealed class AdventOfCodeSolver(
         = solutions.ToDictionary(s => s.Id);
 
     private IProblemInfoService ProblemInfoService { get; } = problemInfoService;
+
+    private AdventOfCodeSettings Settings { get; } = settings.Value;
 
     public async ValueTask SolveAllAsync(CancellationToken cancellationToken = default)
     {
@@ -60,10 +64,17 @@ public sealed class AdventOfCodeSolver(
         };
 
         Logger.LogDebug("Solution: {#Solution}", output);
-        await Client.SubmitProblemOutputAsync(id.Year, id.Day, part, output, cancellationToken)
-            .ConfigureAwait(false);
+        if (Settings.SubmitAnswers)
+        {
+            await Client.SubmitProblemOutputAsync(id.Year, id.Day, part, output, cancellationToken)
+                .ConfigureAwait(false);
 
-        Logger.LogInformation("Solution submitted");
+            Logger.LogInformation("Solution submitted");
+        }
+        else
+        {
+            Logger.LogDebug("Skipping solution submission");
+        }
     }
 
     private async ValueTask<string> GetInputAsync(ProblemId id)
