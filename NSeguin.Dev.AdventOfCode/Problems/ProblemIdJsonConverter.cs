@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace NSeguin.Dev.AdventOfCode;
 
-public class ProblemIdJsonConverter : JsonConverter<ProblemId>
+internal class ProblemIdJsonConverter : JsonConverter<ProblemId>
 {
     public override ProblemId Read(
         ref Utf8JsonReader reader,
