@@ -33,7 +33,7 @@ public partial class Day3() : AdventOfCodeSolution(2023, 3)
         }
     }
 
-    public partial class Schematic
+    public class Schematic
     {
         public Schematic(string input)
         {
