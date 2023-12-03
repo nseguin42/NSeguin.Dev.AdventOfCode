@@ -39,22 +39,15 @@ public sealed class AdventOfCodeClient : IAdventOfCodeClient
             throw new InvalidOperationException("Submitting answers is disabled");
         }
 
-        Uri url;
-        if (part == 1)
+        UriBuilder uriBuilder = new($"{year}/day/{day}/answer");
+        if (part == 2)
         {
-            url = new UriBuilder($"{year}/day/{day}/answer").Uri;
-        }
-        else if (part == 2)
-        {
-            url = new UriBuilder($"{year}/day/{day}/answer").Uri;
-        }
-        else
-        {
-            throw new ArgumentOutOfRangeException(nameof(part));
+            uriBuilder.Query = "level=2";
         }
 
         StringContent content = new(output, Encoding.UTF8, MediaTypeNames.Text.Plain);
-        HttpResponseMessage response = await HttpClient.PostAsync(url, content, cancellationToken)
+        HttpResponseMessage response = await HttpClient
+            .PostAsync(uriBuilder.Uri, content, cancellationToken)
             .ConfigureAwait(false);
 
         return response.IsSuccessStatusCode;
