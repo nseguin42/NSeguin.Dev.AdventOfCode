@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace NSeguin.Dev.AdventOfCode.Utilities;
+namespace NSeguin.Dev.AdventOfCode;
 
 public static class PropertyInfoHelper
 {

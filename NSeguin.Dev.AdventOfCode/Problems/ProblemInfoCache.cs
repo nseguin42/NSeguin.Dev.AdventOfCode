@@ -1,7 +1,5 @@
 using System.Text.Json;
 
-using NSeguin.Dev.AdventOfCode.Utilities;
-
 namespace NSeguin.Dev.AdventOfCode;
 
 internal class ProblemInfoCache : JsonFileCache
