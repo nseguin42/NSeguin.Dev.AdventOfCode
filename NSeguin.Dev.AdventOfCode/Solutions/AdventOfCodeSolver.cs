@@ -66,10 +66,12 @@ public sealed class AdventOfCodeSolver(
         Logger.LogDebug("Solution: {#Solution}", output);
         if (Settings.SubmitAnswers)
         {
-            await Client.SubmitProblemOutputAsync(id.Year, id.Day, part, output, cancellationToken)
+            bool isAccepted = await Client
+                .SubmitProblemOutputAsync(id.Year, id.Day, part, output, cancellationToken)
                 .ConfigureAwait(false);
 
             Logger.LogInformation("Solution submitted");
+            ProblemInfoService.UpdateProblemInfo(id, part, output, isAccepted);
         }
         else
         {

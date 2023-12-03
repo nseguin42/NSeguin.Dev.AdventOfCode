@@ -121,6 +121,11 @@ internal sealed class ProblemInfoService : IProblemInfoService
         return problemInfo;
     }
 
+    public void UpdateProblemInfo(ProblemId id, int part, string answer, bool isAccepted)
+    {
+        Cache.UpdateProblemInfo(id, part, answer, isAccepted);
+    }
+
     private async ValueTask<ProblemInfo?> GetProblemInfoFromCacheAsync(
         ProblemId id,
         CancellationToken cancellationToken = default)
